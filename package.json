@@ -1,0 +1,31 @@
+{
+  "name": "letshorseracebackend",
+  "version": "1.0.0",
+  "description": "",
+  "homepage": "https://github.com/navvycodes/LetsHorseRaceBackend#readme",
+  "bugs": {
+    "url": "https://github.com/navvycodes/LetsHorseRaceBackend/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/navvycodes/LetsHorseRaceBackend.git"
+  },
+  "license": "ISC",
+  "author": "Pranav Raman",
+  "type": "commonjs",
+  "main": "index.ts",
+  "scripts": {
+    "test": "test"
+  },
+  "dependencies": {
+    "express": "^5.1.0",
+    "ws": "^8.18.3"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.3",
+    "@types/node": "^24.2.0",
+    "@types/ws": "^8.18.1",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.9.2"
+  }
+}
