@@ -19,8 +19,8 @@ const apiLimiter = rateLimit({
   },
 });
 
-router.post("/generateUserToken", apiLimiter, createJWTToken);
+router.get("/generateUserToken", apiLimiter, createJWTToken);
 
-router.post("/verifyUserToken", apiLimiter, verifyJWTToken);
+router.get("/verifyUserToken", apiLimiter, verifyJWTToken);
 
 export default router;

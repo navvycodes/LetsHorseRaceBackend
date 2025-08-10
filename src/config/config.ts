@@ -12,7 +12,7 @@ export const config = {
   // Rate limiting configuration for token routes
   tokenRateLimiting: {
     windowMs: 15 * 60 * 1000, // 15 minutes
-    maxRequests: 5, // limit each IP to 5 requests per windowMs
+    maxRequests: 20, // limit each IP to 20 requests per windowMs
   },
 
   // UUID Creation
