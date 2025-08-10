@@ -1,11 +1,11 @@
-import express from "express";
+import app from "./app";
 import http from "http";
 import { WebSocketServer } from "ws";
 import { generateGameCode } from "./utils/generateGameCode";
 import { createGameRequestSchema } from "./utils/messageSchemas";
+import { config } from "./config/config";
 
 // Initialize Express and HTTP server
-const app = express();
 const server = http.createServer(app);
 
 // WebSocket server
@@ -49,6 +49,6 @@ wss.on("connection", (ws) => {
   ws.send("Welcome to the WebSocket server!");
 });
 
-server.listen(8080, () => {
-  console.log("WebSocket server running on http://localhost:8080");
+server.listen(config.port, () => {
+  console.log(`WebSocket server running on http://localhost:${config.port}`);
 });

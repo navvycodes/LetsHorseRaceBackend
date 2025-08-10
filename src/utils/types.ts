@@ -51,3 +51,9 @@ export type HorseRacingMaps = {
     timeCreated: Date;
   };
 };
+
+export type JwtPayload = {
+  user_id: string;
+  iat: number;
+  exp: number;
+};
