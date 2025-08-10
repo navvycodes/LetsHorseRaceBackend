@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+    "target": "ES6",                          // ES6 target
+    "module": "ES6",                          // Use ES6 module syntax
+    "moduleResolution": "node",               // Resolve modules like Node.js
+    "esModuleInterop": true,                  // Allow default import syntax
+    "strict": true,                           // Enable strict type-checking
+    "skipLibCheck": true,                     // Skip library type checks
+    "outDir": "./dist",                       // Output directory for compiled JS
+    "baseUrl": ".",                           // Base path for module resolution
+    "resolveJsonModule": true,                // Allow importing .json files
+    "jsx": "react-jsx"                        // For JSX support (if needed)
+  },
+  "include": [
+    "src/**/*"
+  ]
+}

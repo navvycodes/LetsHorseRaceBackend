@@ -12,14 +12,17 @@
   },
   "license": "ISC",
   "author": "Pranav Raman",
-  "type": "commonjs",
+  "type": "module",
   "main": "index.ts",
   "scripts": {
-    "test": "test"
+    "build": "tsc",
+    "start": "node dist/server.js",
+    "dev": "ts-node src/server.ts"
   },
   "dependencies": {
     "express": "^5.1.0",
-    "ws": "^8.18.3"
+    "ws": "^8.18.3",
+    "zod": "^4.0.16"
   },
   "devDependencies": {
     "@types/express": "^5.0.3",
