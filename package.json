@@ -12,8 +12,8 @@
   },
   "license": "ISC",
   "author": "Pranav Raman",
-  "type": "module",
-  "main": "index.ts",
+  "type": "commonjs",
+  "main": "dist/server.js",
   "scripts": {
     "build": "tsc",
     "start": "node dist/server.js",

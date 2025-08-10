@@ -19,8 +19,4 @@ export const config = {
   uuidCreation: {
     maxTries: 5,
   },
-
-  database: {
-    connectionUrl: process.env.DATABASE_URL || "",
-  },
 };

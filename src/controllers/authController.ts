@@ -1,7 +1,6 @@
-import { generateToken, verifyToken } from "src/auth/jwt/jwt";
-import { RequestResponse } from "src/utils/apiResponse";
+import { generateToken, verifyToken } from "../auth/jwt/jwt";
+import { RequestResponse } from "../utils/apiResponse";
 import { Request, Response } from "express";
-import { success } from "zod";
 
 export const createJWTToken = async (req: Request, res: Response) => {
   try {
