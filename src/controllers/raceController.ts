@@ -1,5 +1,9 @@
 import { AuthenticatedRequest } from "../auth/types";
-import { addPlayerToGame, playerIsReady } from "../horse_racing/GameStates";
+import {
+  addPlayerToGame,
+  generateNewGameState,
+  playerIsReady,
+} from "../horse_racing/GameStates";
 import { RequestResponse } from "../utils/apiResponse";
 import { generateGameCode } from "../utils/generateGameCode";
 import { Response } from "express";
@@ -15,6 +19,7 @@ export const createRace = async (req: AuthenticatedRequest, res: Response) => {
   }
   try {
     const gameCode = generateGameCode();
+    generateNewGameState(gameCode);
     RequestResponse(res, 200, true, "Successfully created race", {
       gameCode: gameCode,
     });
@@ -61,8 +66,11 @@ export const joinRace = async (req: AuthenticatedRequest, res: Response) => {
 };
 
 export const readyUp = async (req: AuthenticatedRequest, res: Response) => {
-  const { gameCode } = req.body;
+  const { gameCode, isReady } = req.body;
 
+  if (typeof isReady !== "boolean") {
+    return RequestResponse(res, 400, false, "isReady must be a boolean");
+  }
   if (!gameCode) {
     return RequestResponse(res, 400, false, "Missing required fields");
   }
@@ -78,7 +86,7 @@ export const readyUp = async (req: AuthenticatedRequest, res: Response) => {
 
   try {
     // Here you would typically mark the player as ready in the game using the gameCode
-    playerIsReady(gameCode, req.user.user_id, true);
+    playerIsReady(gameCode, req.user.user_id, isReady);
     RequestResponse(res, 200, true, "Successfully marked player as ready");
   } catch (error) {
     RequestResponse(res, 500, false, "Error marking player as ready");

@@ -15,6 +15,12 @@ const startGameRequestSchema = z.object({
   gameCode: z.string().length(6, "Game code must be 6 characters long"),
 });
 
-export { joinGameRequestSchema, startGameRequestSchema };
+const readyUpRequestSchema = z.object({
+  gameCode: z.string().length(6, "Game code must be 6 characters long"),
+  isReady: z.boolean(),
+});
+
+export { joinGameRequestSchema, startGameRequestSchema, readyUpRequestSchema };
 export type JoinGameRequest = z.infer<typeof joinGameRequestSchema>;
 export type StartGameRequest = z.infer<typeof startGameRequestSchema>;
+export type ReadyUpRequest = z.infer<typeof readyUpRequestSchema>;

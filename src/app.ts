@@ -15,6 +15,6 @@ app.use(cors());
 // Use Morgan for logging HTTP requests
 app.use(morgan("dev"));
 
-app.use("/token", routes);
+app.use("/horse-racing", routes);
 
 export default app;

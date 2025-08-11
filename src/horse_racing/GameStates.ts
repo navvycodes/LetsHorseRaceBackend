@@ -6,6 +6,9 @@ export const horseRaceStates: HorseRacingMaps = {};
 const DEFAULT_NUM_LEGS = 10;
 const DEFAULT_NUM_DECKS = 1;
 export const generateNewGameState = (gameCode: string) => {
+  if (horseRaceStates[gameCode]) {
+    throw new Error(`Game with code ${gameCode} already exists`);
+  }
   const { deck, legs } = generateDeckAndLegs(
     DEFAULT_NUM_LEGS,
     DEFAULT_NUM_DECKS
@@ -46,6 +49,9 @@ export const addPlayerToGame = (
   player: Player
 ) => {
   const gameState = getGameState(gameCode);
+  if (!gameState) {
+    throw new Error(`Game with code ${gameCode} does not exist`);
+  }
   if (gameState) {
     gameState.players[playerId] = player;
   }

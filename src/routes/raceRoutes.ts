@@ -5,8 +5,11 @@ import { config } from "../config/config";
 import { RequestResponse } from "../utils/apiResponse";
 import { authenticateToken } from "../middleware/authenticateToken";
 import { validateRequestSchemaWithZod } from "../middleware/validateSchemasZod";
-import { joinGameRequestSchema } from "../utils/messageSchemas";
-import { createRace, joinRace } from "../controllers/raceController";
+import {
+  joinGameRequestSchema,
+  readyUpRequestSchema,
+} from "../utils/messageSchemas";
+import { createRace, joinRace, readyUp } from "../controllers/raceController";
 
 const router = Router();
 const apiLimiter = rateLimit({
@@ -32,6 +35,15 @@ router.post(
   authenticateToken,
   validateRequestSchemaWithZod(joinGameRequestSchema, "body"),
   joinRace
+);
+
+// Route to mark player as ready
+router.post(
+  "/markPlayerReady",
+  apiLimiter,
+  authenticateToken,
+  validateRequestSchemaWithZod(readyUpRequestSchema, "body"),
+  readyUp
 );
 
 export default router;
