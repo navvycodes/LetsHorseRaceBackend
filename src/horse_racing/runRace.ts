@@ -18,6 +18,10 @@ export const runRace = (gameCode: string) => {
     const cardSelected = gameState.deck.pop();
     if (!cardSelected) {
       clearInterval(interval);
+      broadcastToGame(gameCode, {
+        type: "RACE_ENDED",
+        message: "No more cards to draw",
+      });
       return;
     }
 
@@ -33,8 +37,8 @@ export const runRace = (gameCode: string) => {
       gameState.horseStates.minHorsePosition++;
       newLeg = gameState.legs.pop();
       const newLegSuit = newLeg ? newLeg.suit : null;
-      if (newLegSuit) {
-        gameState.horseStates[newLegSuit] += -1;
+      if (newLegSuit && gameState.horseStates[newLegSuit] > 0) {
+        gameState.horseStates[newLegSuit] -= 1;
       }
     }
 
@@ -56,11 +60,12 @@ export const runRace = (gameCode: string) => {
       gameState.winner = randomSuit;
       const winners = Object.entries(gameState.players)
         .filter(([_, player]) => player.suitChosen === randomSuit)
-        .map(([playerId]) => playerId);
+        .map(([playerId, player]) => playerId);
       broadcastToGame(gameCode, {
         type: "RACE_FINISHED",
         winningSuit: randomSuit,
         winners,
+        allPlayers: gameState.players,
         horseStates: gameState.horseStates,
       });
     }
