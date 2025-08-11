@@ -54,9 +54,13 @@ export const runRace = (gameCode: string) => {
       clearInterval(interval);
       gameState.gameEnded = true;
       gameState.winner = randomSuit;
+      const winners = Object.entries(gameState.players)
+        .filter(([_, player]) => player.suitChosen === randomSuit)
+        .map(([playerId]) => playerId);
       broadcastToGame(gameCode, {
         type: "RACE_FINISHED",
-        winner: randomSuit,
+        winningSuit: randomSuit,
+        winners,
         horseStates: gameState.horseStates,
       });
     }
