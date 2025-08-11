@@ -11,7 +11,7 @@ export const generateNewGameState = (gameCode: string) => {
     DEFAULT_NUM_DECKS
   );
   horseRaceStates[gameCode] = {
-    players: [],
+    players: {},
     deck: deck,
     legs: legs,
     horseStates: {
@@ -40,19 +40,35 @@ export const getGameState = (gameCode: string) => {
   return horseRaceStates[gameCode] || null;
 };
 
-export const addPlayerToGame = (gameCode: string, player: Player) => {
+export const addPlayerToGame = (
+  gameCode: string,
+  playerId: string,
+  player: Player
+) => {
   const gameState = getGameState(gameCode);
   if (gameState) {
-    gameState.players.push(player);
+    gameState.players[playerId] = player;
   }
 };
 
-export const removePlayerFromGame = (gameCode: string, playerName: string) => {
+export const playerIsReady = (
+  gameCode: string,
+  playerId: string,
+  isReady: boolean
+) => {
   const gameState = getGameState(gameCode);
   if (gameState) {
-    gameState.players = gameState.players.filter(
-      (player) => player.name !== playerName
-    );
+    const player = gameState.players[playerId];
+    if (player) {
+      player.isReady = isReady;
+    }
+  }
+};
+
+export const removePlayerFromGame = (gameCode: string, playerId: string) => {
+  const gameState = getGameState(gameCode);
+  if (gameState && gameState.players[playerId]) {
+    delete gameState.players[playerId];
   }
 };
 

@@ -6,7 +6,7 @@ import { RequestResponse } from "../utils/apiResponse";
 import { authenticateToken } from "../middleware/authenticateToken";
 import { validateRequestSchemaWithZod } from "../middleware/validateSchemasZod";
 import { joinGameRequestSchema } from "../utils/messageSchemas";
-import { createGame, joinGame } from "../controllers/raceController";
+import { createRace, joinRace } from "../controllers/raceController";
 
 const router = Router();
 const apiLimiter = rateLimit({
@@ -23,15 +23,15 @@ const apiLimiter = rateLimit({
 });
 
 // Route to create a game
-router.get("/createGame", apiLimiter, authenticateToken, createGame);
+router.get("/createRace", apiLimiter, authenticateToken, createRace);
 
 // Route to join a game
 router.post(
-  "/joinGame",
+  "/joinRace",
   apiLimiter,
   authenticateToken,
   validateRequestSchemaWithZod(joinGameRequestSchema, "body"),
-  joinGame
+  joinRace
 );
 
 export default router;

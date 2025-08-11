@@ -37,11 +37,13 @@ export type Player = {
   betSize: number;
   suitChosen: Suit;
   betType: BetType;
+  isReady: boolean;
 };
 
 export type HorseRacingMaps = {
   [gameCode: string]: {
-    players: Player[];
+    // The player id is the key for the players map
+    players: Record<string, Player>;
     deck: Card[];
     legs: Card[];
     horseStates: HorseStates;
