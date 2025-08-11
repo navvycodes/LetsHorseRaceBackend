@@ -31,14 +31,16 @@ export function broadcastToGame(gameCode: string, message: any) {
 
 export const horseRaceStates: HorseRacingMaps = {};
 
-export const generateNewGameState = (gameCode: string) => {
+export const generateNewGameState = (
+  gameCode: string,
+  intervalSpeed: number,
+  numDecks: number,
+  numLegs: number
+) => {
   if (horseRaceStates[gameCode]) {
     throw new Error(`Game with code ${gameCode} already exists`);
   }
-  const { deck, legs } = generateDeckAndLegs(
-    DEFAULT_NUM_LEGS,
-    DEFAULT_NUM_DECKS
-  );
+  const { deck, legs } = generateDeckAndLegs(numLegs, numDecks);
   horseRaceStates[gameCode] = {
     players: {},
     deck: deck,
@@ -49,10 +51,11 @@ export const generateNewGameState = (gameCode: string) => {
       Hearts: 0,
       Spades: 0,
       minHorsePosition: 1,
-      maxHorsePosition: DEFAULT_NUM_LEGS - 1,
+      maxHorsePosition: numLegs + 1,
     },
     gameStarted: false,
     gameEnded: false,
+    intervalSpeed: Math.max(intervalSpeed, 1000), // Ensure minimum speed of 1000ms
     winner: null,
     timeCreated: new Date(),
   };

@@ -10,7 +10,17 @@ const shouldFlipLeg = (gameState: HorseRaceState) => {
 
 export const runRace = (gameCode: string) => {
   const gameState = getGameState(gameCode);
+
   if (!gameState) return;
+  if (gameState.gameEnded) {
+    broadcastToGame(gameCode, {
+      type: "RACE_ENDED",
+      message: "The race has already ended",
+    });
+    return;
+  }
+
+  const intervalSpeed = gameState?.intervalSpeed || 1000;
 
   let interval = setInterval(() => {
     // Simulate horse movement (update gameState.horseStates here)
@@ -69,5 +79,5 @@ export const runRace = (gameCode: string) => {
         horseStates: gameState.horseStates,
       });
     }
-  }, 1000);
+  }, intervalSpeed);
 };

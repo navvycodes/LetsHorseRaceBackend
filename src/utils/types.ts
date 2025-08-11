@@ -61,6 +61,7 @@ export type HorseRacingMaps = {
     gameEnded: boolean;
     winner: string | null;
     timeCreated: Date;
+    intervalSpeed: number;
   };
 };
 

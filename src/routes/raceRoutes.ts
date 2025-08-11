@@ -6,6 +6,7 @@ import { RequestResponse } from "../utils/apiResponse";
 import { authenticateToken } from "../middleware/authenticateToken";
 import { validateRequestSchemaWithZod } from "../middleware/validateSchemasZod";
 import {
+  createGameRequestSchema,
   joinGameRequestSchema,
   readyUpRequestSchema,
 } from "../utils/messageSchemas";
@@ -26,7 +27,13 @@ const apiLimiter = rateLimit({
 });
 
 // Route to create a game
-router.get("/createRace", apiLimiter, authenticateToken, createRace);
+router.post(
+  "/createRace",
+  apiLimiter,
+  authenticateToken,
+  validateRequestSchemaWithZod(createGameRequestSchema, "body"),
+  createRace
+);
 
 // Route to join a game
 router.post(

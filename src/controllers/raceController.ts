@@ -18,6 +18,10 @@ import { Response } from "express";
  * If the game is successfully created, it returns the game code.
  */
 export const createRace = async (req: AuthenticatedRequest, res: Response) => {
+  const { playingSpeedInterval, numDecks, numLegs } = req.body;
+  if (!playingSpeedInterval || !numDecks || !numLegs) {
+    return RequestResponse(res, 400, false, "Missing required fields");
+  }
   if (!req.user || !req.user.user_id) {
     return RequestResponse(
       res,
@@ -28,7 +32,7 @@ export const createRace = async (req: AuthenticatedRequest, res: Response) => {
   }
   try {
     const gameCode = generateGameCode();
-    generateNewGameState(gameCode);
+    generateNewGameState(gameCode, playingSpeedInterval, numDecks, numLegs);
     RequestResponse(res, 200, true, "Successfully created race", {
       gameCode: gameCode,
     });
