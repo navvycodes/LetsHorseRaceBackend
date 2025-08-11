@@ -8,6 +8,12 @@ import { RequestResponse } from "../utils/apiResponse";
 import { generateGameCode } from "../utils/generateGameCode";
 import { Response } from "express";
 
+/**
+ * The createRace function allows a user to create a new horse racing game.
+ * It generates a unique game code and initializes the game state.
+ * If the user is not authenticated, it returns a 401 error.
+ * If the game is successfully created, it returns the game code.
+ */
 export const createRace = async (req: AuthenticatedRequest, res: Response) => {
   if (!req.user || !req.user.user_id) {
     return RequestResponse(
@@ -28,6 +34,13 @@ export const createRace = async (req: AuthenticatedRequest, res: Response) => {
   }
 };
 
+/**
+ * The joinRace function allows a user to join a horse racing game.
+ * It requires the user to provide a game code, player name, bet size, bet type, and suit.
+ * If any of these fields are missing, it returns a 400 error.
+ * If the user is not authenticated, it returns a 401 error.
+ * If the user is authenticated, it adds the player to the game state and returns a success message.
+ */
 export const joinRace = async (req: AuthenticatedRequest, res: Response) => {
   const { gameCode, playerName, betSize, betType, suit } = req.body;
 
@@ -65,6 +78,11 @@ export const joinRace = async (req: AuthenticatedRequest, res: Response) => {
   }
 };
 
+/**
+ * This function will mark the player as ready or not ready in the game state.
+ * If the player is ready, it will set the isReady property of the player to true
+ * If the player is not ready, it will set the isReady property of the player to false
+ */
 export const readyUp = async (req: AuthenticatedRequest, res: Response) => {
   const { gameCode, isReady } = req.body;
 
@@ -85,7 +103,6 @@ export const readyUp = async (req: AuthenticatedRequest, res: Response) => {
   }
 
   try {
-    // Here you would typically mark the player as ready in the game using the gameCode
     playerIsReady(gameCode, req.user.user_id, isReady);
     RequestResponse(res, 200, true, "Successfully marked player as ready");
   } catch (error) {
