@@ -3,29 +3,41 @@ import { addConnection, hasGame } from "../horse_racing/GameStates";
 export const handleMessage = (
   webSocket: WebSocket,
   message: string
-): string => {
+): { success: boolean; message: string; gameCode: string | null } => {
   let parseMessage;
   try {
     parseMessage = JSON.parse(message.toString());
   } catch (error) {
-    return JSON.stringify({ error: "Invalid message format" });
+    return {
+      success: false,
+      message: "Invalid message format",
+      gameCode: null,
+    };
   }
   switch (parseMessage.messageName) {
     case "JOIN_WS":
       if (!parseMessage.gameCode || parseMessage.gameCode.length !== 6) {
-        return JSON.stringify({ error: "Invalid game code" });
+        return { success: false, message: "Invalid game code", gameCode: null };
       }
       if (hasGame(parseMessage.gameCode) === false) {
-        return JSON.stringify({ error: "Game does not exist" });
+        return {
+          success: false,
+          message: "Game does not exist",
+          gameCode: null,
+        };
       } else {
         addConnection(parseMessage.gameCode, webSocket);
       }
-      return JSON.stringify({
+      return {
         success: true,
         message: "Successfully joined game",
         gameCode: parseMessage.gameCode,
-      });
+      };
     default:
-      return JSON.stringify({ error: "Unknown message type" });
+      return {
+        success: false,
+        message: "Unknown message type",
+        gameCode: null,
+      };
   }
 };

@@ -18,6 +18,7 @@ export function removeConnection(gameCode: string, ws: WebSocket) {
   gameConnections[gameCode]?.delete(ws);
   if (gameConnections[gameCode]?.size === 0) {
     delete gameConnections[gameCode];
+    delete horseRaceStates[gameCode];
   }
 }
 
