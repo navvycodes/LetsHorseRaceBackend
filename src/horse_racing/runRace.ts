@@ -1,8 +1,8 @@
 import { HorseRaceState } from "../utils/types";
 import { broadcastToGame, getGameState, horseRaceStates } from "./GameStates";
 
+// Check if all horses have reached the minimum position
 const shouldFlipLeg = (gameState: HorseRaceState) => {
-  // Check if all horses have reached the minimum position
   return Object.values(gameState.horseStates).every(
     (position) => position >= gameState.horseStates.minHorsePosition
   );
@@ -23,8 +23,7 @@ export const runRace = (gameCode: string) => {
   const intervalSpeed = gameState?.intervalSpeed || 1000;
 
   let interval = setInterval(() => {
-    // Simulate horse movement (update gameState.horseStates here)
-    // For example, randomly increment one horse's position:
+    // Fetch a card from the top of the deck
     const cardSelected = gameState.deck.pop();
     if (!cardSelected) {
       clearInterval(interval);
