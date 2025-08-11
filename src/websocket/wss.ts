@@ -1,23 +1,31 @@
-import { generateGameCode } from "../utils/generateGameCode";
-
-export const handleMessage = (message: string): string => {
+import { WebSocket } from "ws";
+import { addConnection, hasGame } from "../horse_racing/GameStates";
+export const handleMessage = (
+  webSocket: WebSocket,
+  message: string
+): string => {
   let parseMessage;
   try {
     parseMessage = JSON.parse(message.toString());
   } catch (error) {
-    console.error("Failed to parse message:", error);
     return JSON.stringify({ error: "Invalid message format" });
   }
-  // Handle Different Message Types
   switch (parseMessage.messageName) {
-    case "CREATE_GAME":
-      const gameCode = generateGameCode();
-      return JSON.stringify({ messageName: "GAME_CREATED", gameCode });
-    case "JOIN_GAME":
-      // Handle join game logic here
-      break;
+    case "JOIN_WS":
+      if (!parseMessage.gameCode || parseMessage.gameCode.length !== 6) {
+        return JSON.stringify({ error: "Invalid game code" });
+      }
+      if (hasGame(parseMessage.gameCode) === false) {
+        return JSON.stringify({ error: "Game does not exist" });
+      } else {
+        addConnection(parseMessage.gameCode, webSocket);
+      }
+      return JSON.stringify({
+        success: true,
+        message: "Successfully joined game",
+        gameCode: parseMessage.gameCode,
+      });
     default:
       return JSON.stringify({ error: "Unknown message type" });
   }
-  return JSON.stringify({ error: "Unknown message type" });
 };

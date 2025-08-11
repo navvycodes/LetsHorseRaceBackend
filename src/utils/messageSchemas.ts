@@ -1,6 +1,11 @@
 import { z } from "zod";
 import { allSuitsArray, betTypeArray } from "./types";
 
+const joinGameRequestWebSocketSchema = z.object({
+  type: z.literal("JOIN_WS"),
+  gameCode: z.string().length(6, "Game code must be 6 characters long"),
+});
+
 const joinGameRequestSchema = z.object({
   gameCode: z.string().length(6, "Game code must be 6 characters long"),
   playerName: z.string().min(1, "Player name is required"),
@@ -20,7 +25,15 @@ const readyUpRequestSchema = z.object({
   isReady: z.boolean(),
 });
 
-export { joinGameRequestSchema, startGameRequestSchema, readyUpRequestSchema };
+export {
+  joinGameRequestSchema,
+  startGameRequestSchema,
+  readyUpRequestSchema,
+  joinGameRequestWebSocketSchema,
+};
 export type JoinGameRequest = z.infer<typeof joinGameRequestSchema>;
 export type StartGameRequest = z.infer<typeof startGameRequestSchema>;
 export type ReadyUpRequest = z.infer<typeof readyUpRequestSchema>;
+export type JoinGameRequestWebSocket = z.infer<
+  typeof joinGameRequestWebSocketSchema
+>;

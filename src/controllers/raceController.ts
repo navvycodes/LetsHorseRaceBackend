@@ -1,8 +1,10 @@
 import { AuthenticatedRequest } from "../auth/types";
 import {
   addPlayerToGame,
+  allPlayersReady,
   generateNewGameState,
   playerIsReady,
+  startGame,
 } from "../horse_racing/GameStates";
 import { RequestResponse } from "../utils/apiResponse";
 import { generateGameCode } from "../utils/generateGameCode";
@@ -104,6 +106,10 @@ export const readyUp = async (req: AuthenticatedRequest, res: Response) => {
 
   try {
     playerIsReady(gameCode, req.user.user_id, isReady);
+    if (allPlayersReady(gameCode)) {
+      startGame(gameCode);
+      // runRace(gameCode);
+    }
     RequestResponse(res, 200, true, "Successfully marked player as ready");
   } catch (error) {
     RequestResponse(res, 500, false, "Error marking player as ready");
