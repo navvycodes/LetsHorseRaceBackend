@@ -44,12 +44,11 @@ export const generateNewGameState = (gameCode: string) => {
     deck: deck,
     legs: legs,
     horseStates: {
-      CLUBS: 0,
-      DIAMONDS: 0,
-      HEARTS: 0,
-      SPADES: 0,
-      currentLeg: 0,
-      minHorsePosition: 0,
+      Clubs: 0,
+      Diamonds: 0,
+      Hearts: 0,
+      Spades: 0,
+      minHorsePosition: 1,
       maxHorsePosition: DEFAULT_NUM_LEGS - 1,
     },
     gameStarted: false,
@@ -130,5 +129,13 @@ export const startGame = (gameCode: string) => {
   const gameState = getGameState(gameCode);
   if (gameState) {
     gameState.gameStarted = true;
+  }
+};
+
+export const endGame = (gameCode: string, winner: string | null = null) => {
+  const gameState = getGameState(gameCode);
+  if (gameState) {
+    gameState.gameEnded = true;
+    gameState.winner = winner;
   }
 };

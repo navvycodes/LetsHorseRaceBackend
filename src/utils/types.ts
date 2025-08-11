@@ -1,3 +1,5 @@
+import e from "express";
+
 export type BetType = "SHOTS" | "SIPS" | "CANS" | "BEERS";
 export type Suit = "Hearts" | "Diamonds" | "Clubs" | "Spades";
 
@@ -18,11 +20,8 @@ export type Rank =
   | "King";
 
 type HorseStates = {
-  CLUBS: number;
-  DIAMONDS: number;
-  HEARTS: number;
-  SPADES: number;
-  currentLeg: number;
+  [key in Suit]: number;
+} & {
   minHorsePosition: number;
   maxHorsePosition: number;
 };
@@ -38,6 +37,17 @@ export type Player = {
   suitChosen: Suit;
   betType: BetType;
   isReady: boolean;
+};
+
+export type HorseRaceState = {
+  players: Record<string, Player>;
+  deck: Card[];
+  legs: Card[];
+  horseStates: HorseStates;
+  gameStarted: boolean;
+  gameEnded: boolean;
+  winner: string | null;
+  timeCreated: Date;
 };
 
 export type HorseRacingMaps = {
