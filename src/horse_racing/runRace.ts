@@ -1,5 +1,5 @@
 import { HorseRaceState } from "../utils/types";
-import { broadcastToGame, getGameState, horseRaceStates } from "./GameStates";
+import { broadcastToGame, getGameState } from "./GameStates";
 
 // Check if all horses have reached the minimum position
 const shouldFlipLeg = (gameState: HorseRaceState) => {
