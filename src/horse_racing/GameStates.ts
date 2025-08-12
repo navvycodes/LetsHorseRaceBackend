@@ -2,9 +2,6 @@ import { generateDeckAndLegs } from "../utils/generateDeckAndLegs";
 import { WebSocket } from "ws";
 import { HorseRacingMaps, Player } from "../utils/types";
 
-const DEFAULT_NUM_LEGS = 10;
-const DEFAULT_NUM_DECKS = 1;
-
 export const gameConnections: { [gameCode: string]: Set<WebSocket> } = {};
 
 export function addConnection(gameCode: string, ws: WebSocket) {
