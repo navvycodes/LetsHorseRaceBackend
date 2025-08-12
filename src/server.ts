@@ -4,7 +4,7 @@ import { WebSocketServer } from "ws";
 import { config } from "./config/config";
 import { handleMessage } from "./websocket/wss";
 import { success } from "zod";
-import { removeConnection } from "./horse_racing/GameStates";
+import { removeConnection } from "./horse_racing/gameStates";
 
 // Initialize Express and HTTP server
 const server = http.createServer(app);

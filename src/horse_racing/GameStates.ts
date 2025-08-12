@@ -43,8 +43,6 @@ export const generateNewGameState = (
   const { deck, legs } = generateDeckAndLegs(numLegs, numDecks);
   horseRaceStates[gameCode] = {
     players: {},
-    deck: deck,
-    legs: legs,
     horseStates: {
       Clubs: 0,
       Diamonds: 0,
@@ -53,6 +51,8 @@ export const generateNewGameState = (
       minHorsePosition: 1,
       maxHorsePosition: numLegs + 1,
     },
+    numLegs: numLegs,
+    numDecks: numDecks,
     gameStarted: false,
     gameEnded: false,
     intervalSpeed: Math.max(intervalSpeed, 1000), // Ensure minimum speed of 1000ms

@@ -39,12 +39,24 @@ const readyUpRequestSchema = z.object({
   isReady: z.boolean(),
 });
 
+const postRaceFinishDrinkHandoutRequestSchema = z.object({
+  gameCode: z.string().length(6, "Game code must be 6 characters long"),
+  drinkHandout: z.array(
+    z.object({
+      user_id: z.string().min(1, "User ID is required"),
+      betType: z.enum(betTypeArray, "Invalid bet type"),
+      betSize: z.number().min(1, "Bet size must be at least 1"),
+    })
+  ),
+});
+
 export {
   createGameRequestSchema,
   joinGameRequestWebSocketSchema,
   joinGameRequestSchema,
   startGameRequestSchema,
   readyUpRequestSchema,
+  postRaceFinishDrinkHandoutRequestSchema,
 };
 export type JoinGameRequest = z.infer<typeof joinGameRequestSchema>;
 export type StartGameRequest = z.infer<typeof startGameRequestSchema>;
@@ -53,3 +65,6 @@ export type JoinGameRequestWebSocket = z.infer<
   typeof joinGameRequestWebSocketSchema
 >;
 export type CreateGameRequest = z.infer<typeof createGameRequestSchema>;
+export type PostRaceFinishDrinkHandoutRequest = z.infer<
+  typeof postRaceFinishDrinkHandoutRequestSchema
+>;

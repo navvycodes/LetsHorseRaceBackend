@@ -5,7 +5,7 @@ import {
   generateNewGameState,
   playerIsReady,
   startGame,
-} from "../horse_racing/GameStates";
+} from "../horse_racing/gameStates";
 import { runRace } from "../horse_racing/runRace";
 import { RequestResponse } from "../utils/apiResponse";
 import { generateGameCode } from "../utils/generateGameCode";
@@ -118,5 +118,34 @@ export const readyUp = async (req: AuthenticatedRequest, res: Response) => {
     RequestResponse(res, 200, true, "Successfully marked player as ready");
   } catch (error) {
     RequestResponse(res, 500, false, "Error marking player as ready");
+  }
+};
+
+export const postRaceFinishDrinkHandout = async (
+  req: AuthenticatedRequest,
+  res: Response
+) => {
+  const { gameCode, drinkHandout } = req.body;
+
+  if (!gameCode || !drinkHandout) {
+    return RequestResponse(res, 400, false, "Missing required fields");
+  }
+
+  if (!req.user || !req.user.user_id) {
+    return RequestResponse(
+      res,
+      401,
+      false,
+      "Unauthorized: User not authenticated"
+    );
+  }
+
+  try {
+    RequestResponse(res, 200, true, "Successfully processed drink handout", {
+      gameCode,
+      drinkHandout,
+    });
+  } catch (error) {
+    RequestResponse(res, 500, false, "Error processing drink handout");
   }
 };

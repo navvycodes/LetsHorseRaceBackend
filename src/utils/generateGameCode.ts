@@ -1,5 +1,5 @@
 import { config } from "../config/config";
-import { horseRaceStates } from "../horse_racing/GameStates";
+import { horseRaceStates } from "../horse_racing/gameStates";
 
 export const generateGameCode = (): string => {
   const MAX_ATTEMPTS = config.uuidCreation.maxTries || 5;

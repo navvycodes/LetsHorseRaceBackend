@@ -1,5 +1,5 @@
 import { WebSocket } from "ws";
-import { addConnection, hasGame } from "../horse_racing/GameStates";
+import { addConnection, hasGame } from "../horse_racing/gameStates";
 export const handleMessage = (
   webSocket: WebSocket,
   message: string

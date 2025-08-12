@@ -1,5 +1,6 @@
+import { generateDeckAndLegs } from "../utils/generateDeckAndLegs";
 import { HorseRaceState } from "../utils/types";
-import { broadcastToGame, getGameState } from "./GameStates";
+import { broadcastToGame, getGameState } from "./gameStates";
 
 // Check if all horses have reached the minimum position
 const shouldFlipLeg = (gameState: HorseRaceState) => {
@@ -21,10 +22,13 @@ export const runRace = (gameCode: string) => {
   }
 
   const intervalSpeed = gameState?.intervalSpeed || 1000;
-
+  const { deck, legs } = generateDeckAndLegs(
+    gameState.numLegs,
+    gameState.numDecks
+  );
   let interval = setInterval(() => {
     // Fetch a card from the top of the deck
-    const cardSelected = gameState.deck.pop();
+    const cardSelected = deck.pop();
     if (!cardSelected) {
       clearInterval(interval);
       broadcastToGame(gameCode, {
@@ -44,7 +48,7 @@ export const runRace = (gameCode: string) => {
     let newLeg = null;
     if (shouldFlipLeg(gameState)) {
       gameState.horseStates.minHorsePosition++;
-      newLeg = gameState.legs.pop();
+      newLeg = legs.pop();
       const newLegSuit = newLeg ? newLeg.suit : null;
       if (newLegSuit && gameState.horseStates[newLegSuit] > 0) {
         gameState.horseStates[newLegSuit] -= 1;

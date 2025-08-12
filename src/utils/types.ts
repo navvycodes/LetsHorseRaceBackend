@@ -41,8 +41,8 @@ export type Player = {
 
 export type HorseRaceState = {
   players: Record<string, Player>;
-  deck: Card[];
-  legs: Card[];
+  numLegs: number;
+  numDecks: number;
   horseStates: HorseStates;
   gameStarted: boolean;
   gameEnded: boolean;
@@ -54,8 +54,8 @@ export type HorseRacingMaps = {
   [gameCode: string]: {
     // The player id is the key for the players map
     players: Record<string, Player>;
-    deck: Card[];
-    legs: Card[];
+    numLegs: number;
+    numDecks: number;
     horseStates: HorseStates;
     gameStarted: boolean;
     gameEnded: boolean;
@@ -69,4 +69,10 @@ export type JwtPayload = {
   user_id: string;
   iat: number;
   exp: number;
+};
+
+export type PersonDrinkHandout = {
+  user_id: string;
+  betType: BetType;
+  betSize: number;
 };
