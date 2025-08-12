@@ -8,15 +8,9 @@ import { validateRequestSchemaWithZod } from "../middleware/validateSchemasZod";
 import {
   createGameRequestSchema,
   joinGameRequestSchema,
-  postRaceFinishDrinkHandoutRequestSchema,
   readyUpRequestSchema,
 } from "../utils/messageSchemas";
-import {
-  createRace,
-  joinRace,
-  postRaceFinishDrinkHandout,
-  readyUp,
-} from "../controllers/raceController";
+import { createRace, joinRace, readyUp } from "../controllers/raceController";
 
 const router = Router();
 const apiLimiter = rateLimit({
@@ -57,15 +51,6 @@ router.post(
   authenticateToken,
   validateRequestSchemaWithZod(readyUpRequestSchema, "body"),
   readyUp
-);
-
-// Route to handle post game drink handout
-router.post(
-  "/postRaceFinishDrinkHandout",
-  apiLimiter,
-  authenticateToken,
-  validateRequestSchemaWithZod(postRaceFinishDrinkHandoutRequestSchema, "body"),
-  postRaceFinishDrinkHandout
 );
 
 export default router;

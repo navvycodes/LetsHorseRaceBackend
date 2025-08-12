@@ -33,6 +33,12 @@ export const handleMessage = (
         message: "Successfully joined game",
         gameCode: parseMessage.gameCode,
       };
+    case "DRINK_HANDOUT_SUBMIT":
+      return {
+        success: true,
+        message: "Drink handout submitted",
+        gameCode: parseMessage.gameCode,
+      };
     default:
       return {
         success: false,

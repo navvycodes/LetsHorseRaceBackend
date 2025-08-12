@@ -1,5 +1,3 @@
-import e from "express";
-
 export type BetType = "SHOTS" | "SIPS" | "CANS" | "BEERS";
 export type Suit = "Hearts" | "Diamonds" | "Clubs" | "Spades";
 

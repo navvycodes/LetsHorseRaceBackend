@@ -81,6 +81,13 @@ export const runRace = (gameCode: string) => {
         allPlayers: gameState.players,
         horseStates: gameState.horseStates,
       });
+
+      broadcastToGame(gameCode, {
+        type: "DRINK_HANDOUT_PHASE_START",
+        winners,
+        message: "Winners, please hand out drinks!",
+        votingTimeout: 30000, // e.g., 30 seconds for voting
+      });
     }
   }, intervalSpeed);
 };
