@@ -37,7 +37,6 @@ export const generateNewGameState = (
   if (horseRaceStates[gameCode]) {
     throw new Error(`Game with code ${gameCode} already exists`);
   }
-  const { deck, legs } = generateDeckAndLegs(numLegs, numDecks);
   horseRaceStates[gameCode] = {
     players: {},
     horseStates: {
