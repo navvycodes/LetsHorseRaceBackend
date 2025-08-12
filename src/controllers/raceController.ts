@@ -3,6 +3,7 @@ import {
   addPlayerToGame,
   allPlayersReady,
   generateNewGameState,
+  handDrinksOut,
   playerIsReady,
   startGame,
 } from "../horse_racing/gameStates";
@@ -121,6 +122,13 @@ export const readyUp = async (req: AuthenticatedRequest, res: Response) => {
   }
 };
 
+/**
+ * Handles the drink handout process after a race finishes.
+ * @param req - The request object containing the game code and drink handout details.
+ * @param res - The response object used to send the response.
+ * @returns A response indicating the success or failure of the operation.
+ */
+
 export const postRaceFinishDrinkHandout = async (
   req: AuthenticatedRequest,
   res: Response
@@ -141,6 +149,8 @@ export const postRaceFinishDrinkHandout = async (
   }
 
   try {
+    // Handle the drink handout
+    handDrinksOut(gameCode, drinkHandout, req.user.user_id);
     RequestResponse(res, 200, true, "Successfully processed drink handout", {
       gameCode,
       drinkHandout,

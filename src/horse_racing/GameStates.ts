@@ -1,5 +1,5 @@
 import { WebSocket } from "ws";
-import { HorseRacingMaps, Player } from "../utils/types";
+import { HorseRacingMaps, PersonDrinkHandout, Player } from "../utils/types";
 
 export const gameConnections: { [gameCode: string]: Set<WebSocket> } = {};
 
@@ -138,4 +138,37 @@ export const endGame = (gameCode: string, winner: string | null = null) => {
     gameState.gameEnded = true;
     gameState.winner = winner;
   }
+};
+
+export const handDrinksOut = (
+  gameCode: string,
+  drinkHandout: PersonDrinkHandout[],
+  winnerId: string
+) => {
+  const gameState = getGameState(gameCode);
+  if (!gameState) {
+    throw new Error(`Game with code ${gameCode} does not exist`);
+  }
+  if (!drinkHandout || !Array.isArray(drinkHandout)) {
+    throw new Error("Invalid drink handout data");
+  }
+  const handingPlayer = gameState.players[winnerId];
+  if (!handingPlayer) {
+    throw new Error(
+      `Player with ID ${winnerId} does not exist in game ${gameCode}`
+    );
+  }
+
+  drinkHandout.forEach(({ user_id, betType, betSize }) => {
+    const player = gameState.players[user_id];
+    broadcastToGame(gameCode, {
+      type: "DRINK_HANDOUT",
+      message: `${handingPlayer.name} is handing out ${betSize} ${betType} to ${player.name}`,
+      payload: {
+        user_id,
+        betType,
+        betSize,
+      },
+    });
+  });
 };
