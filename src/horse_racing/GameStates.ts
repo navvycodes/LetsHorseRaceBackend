@@ -1,4 +1,3 @@
-import { generateDeckAndLegs } from "../utils/generateDeckAndLegs";
 import { WebSocket } from "ws";
 import { HorseRacingMaps, Player } from "../utils/types";
 
@@ -67,6 +66,7 @@ export const cleanupOldGames = (maxAgeMinutes: number = 60) => {
     const age = (now - new Date(state.timeCreated).getTime()) / 60000;
     if (state.gameEnded || age > maxAgeMinutes) {
       delete horseRaceStates[code];
+      delete gameConnections[code];
     }
   });
 };
@@ -74,6 +74,7 @@ export const cleanupOldGames = (maxAgeMinutes: number = 60) => {
 export const clearGameState = (gameCode: string) => {
   if (horseRaceStates[gameCode]) {
     delete horseRaceStates[gameCode];
+    delete gameConnections[gameCode];
   }
 };
 
